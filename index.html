@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ff7eb6">
+  <title>Berry &amp; Friends Picnic</title>
+  <link rel="icon" type="image/png" href="img/logo.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<audio id="musica" src="musica.wav" loop autoplay></audio>
+<div id="escena" class="escena" aria-hidden="true">
+  <i class="sol"></i><i class="arbusto b1"></i><i class="arbusto b2"></i><i class="arbusto b3"></i>
+  <i class="nube n1"></i><i class="nube n2"></i><i class="nube n3"></i>
+  <i class="colina c1"></i><i class="colina c2"></i><i class="cerca"></i>
+  <i class="arbol a1"></i><i class="arbol a2"></i><i class="flores"></i>
+</div>
+
+<main>
+  <button id="sonido" class="redondo" aria-label="Activar o silenciar la música">&#9834;</button>
+
+  <section id="menu" class="pantalla">
+    <div class="letrero">
+      <img class="fruta-letrero izq" src="img/fresa.png" alt="">
+      <img class="fruta-letrero der" src="img/limon.png" alt="">
+      <h1>Berry &amp; Friends<span>Picnic</span></h1>
+      <p class="subtitulo">¡La aventura del picnic!</p>
+    </div>
+    <div id="picnicMenu" class="picnic-escena" role="img" aria-label="Los siete amigos sentados en la manta del picnic">
+      <div class="manta-picnic"></div>
+    </div>
+    <div class="fila-botones">
+      <button id="btnJugar" class="boton jugar">1 jugador</button>
+      <button id="btnDos" class="boton jugar dos">2 jugadores</button>
+      <button id="btnInstr" class="boton claro">Instrucciones</button>
+    </div>
+  </section>
+
+  <section id="instrucciones" class="pantalla papel" hidden>
+    <div class="dos-columnas">
+      <div class="panel">
+        <h2 class="etiqueta">Instrucciones</h2>
+        <p class="intro">El viento desordenó el picnic y tus amigos esperan su merienda. ¡Ayúdalos!</p>
+        <ul class="lista-estrellas">
+          <li>Muévete por el prado con la cruceta de la pantalla, las flechas o W A S D.</li>
+          <li>Pasa por la <b>cesta</b> para preparar el pedido y llévalo al invitado que brilla.</li>
+          <li>Resuelve su reto para ganar puntos. Si fallas, pierdes una vida.</li>
+          <li>Los <b>charcos</b> y los <b>hormigueros</b> te quitan una vida.</li>
+          <li>Cuidado con el <b>mapache travieso</b>: congela tu siguiente turno y todo se pone rojo.</li>
+          <li>Cada 4 jugadas exitosas (recoger un pedido o entregarlo bien) sopla el <b>viento</b> y dos casillas cambian de lugar.</li>
+          <li>Son 5 niveles. Cada nivel trae retos más difíciles, da más puntos y te regala 1 vida.</li>
+          <li>En modo <b>2 jugadores</b> se turnan en el mismo dispositivo: el Jugador 1 se mueve con W A S D o la cruceta rosada y el Jugador 2 con las flechas o la cruceta azul. Cada movimiento es un turno. Gana quien tenga más puntos al final, o el que siga con vidas si el otro se queda sin ninguna.</li>
+          <li>En los retos puedes responder con las teclas 1, 2 y 3.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h2 class="etiqueta">Nuestros amigos</h2>
+        <div id="amigos" class="amigos"></div>
+      </div>
+    </div>
+    <button id="btnVolver" class="boton">¡Buena suerte!</button>
+  </section>
+
+  <section id="seleccion" class="pantalla papel" hidden>
+    <h2 id="tituloSeleccion" class="titulo-papel">Elige tu personaje</h2>
+    <p class="ayuda-teclas">Usa las flechas del teclado para elegir y <b>Enter</b> para comenzar</p>
+    <div class="seleccion">
+      <div id="tarjetas" class="tarjetas"></div>
+      <aside class="detalle">
+        <div id="detalle" class="detalle-info"></div>
+        <button id="btnComenzar" class="boton">¡Comenzar!</button>
+      </aside>
+    </div>
+    <div class="fila-botones">
+      <button id="btnAtras" class="boton claro">Volver al menú</button>
+    </div>
+  </section>
+
+  <section id="juego" class="pantalla" hidden>
+    <div class="hud">
+      <span class="pildora solo1"><img src="img/estrella.png" alt=""><span class="lbl">Puntos: </span><b id="hPuntos">0</b></span>
+      <span class="pildora solo1"><img src="img/corazon.png" alt=""><span class="lbl">Vidas: </span><b id="hVidas">3</b></span>
+      <span class="pildora"><img src="img/huella.png" alt=""><span class="lbl">Turno: </span><b id="hTurno">0</b></span>
+      <span class="pildora"><img src="img/cesta.png" alt=""><span class="lbl">Pedidos: </span><b id="hPedidos">0/3</b></span>
+      <span class="pildora nivel"><span class="lbl">Nivel </span><span class="corto">Nv.</span><b id="hNivel">1/5</b></span>
+    </div>
+    <div id="marcador2" class="marcador2"></div>
+    <p id="paso" class="paso"></p>
+    <div class="reglas-movil">
+      <span class="regla-mapache"><img src="img/mapache_i.png" alt="Mapache">Si pisas al mapache, pierdes tu próximo turno</span>
+      <span><svg class="ico-viento" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 12h17a4 4 0 1 0-4-4M3 18h22a4 4 0 1 1-4 4M3 24h9" fill="none" stroke="#7ec8ff" stroke-width="3" stroke-linecap="round"/></svg>Viento en <b id="hVientoM">4</b></span>
+    </div>
+
+    <div class="zona-juego">
+      <div class="lado-heroe">
+        <p id="burbuja" class="burbuja"></p>
+        <img id="heroe" class="heroe" alt="Tu personaje">
+        <p id="nombreHeroe" class="placa"></p>
+      </div>
+
+      <div class="centro">
+        <div id="tablero" class="tablero"></div>
+        <div id="controles" class="controles"></div>
+      </div>
+
+      <aside class="lado-info">
+        <div class="cartel">
+          <h3>Reglas especiales</h3>
+          <div class="regla">
+            <img src="img/mapache_i.png" alt="Mapache">
+            <p>Si encuentras al mapache travieso... ¡pierdes tu próximo turno!</p>
+          </div>
+          <div class="regla">
+            <svg class="ico-viento" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 12h17a4 4 0 1 0-4-4M3 18h22a4 4 0 1 1-4 4M3 24h9" fill="none" stroke="#7ec8ff" stroke-width="3" stroke-linecap="round"/></svg>
+            <p>Cada 4 jugadas exitosas sopla el viento y 2 casillas cambian de lugar. Faltan <b id="hViento">4</b></p>
+          </div>
+        </div>
+        <div class="invitados-caja">
+          <h3>Invitados</h3>
+          <div id="invitados" class="invitados"></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="final" class="pantalla" hidden>
+    <div class="cinta"><h2 id="fTitulo"></h2></div>
+    <p id="fSub" class="subtitulo-final"></p>
+    <span class="pildora grande"><img src="img/estrella.png" alt="">Puntos finales: <b id="fPuntos">0</b></span>
+    <div id="picnicFinal" class="picnic-escena" role="img" aria-label="Los siete amigos celebrando en el picnic">
+      <div class="manta-picnic"></div>
+    </div>
+    <img id="fImg" class="grupo final-img" src="img/mapache.png" alt="El mapache travieso">
+    <div id="brindis" class="brindis">
+      <img src="img/fresita.png" alt="Fresita">
+      <div class="limonada"><img src="img/fresa.png" alt=""><img class="mini-corazon" src="img/corazon.png" alt=""><img src="img/limon.png" alt=""></div>
+      <img src="img/pato_limon.png" alt="Limón">
+      <p id="fBrindis"></p>
+    </div>
+    <div class="fila-botones">
+      <button id="btnMenu" class="boton claro">Volver al menú</button>
+      <button id="btnOtra" class="boton">Jugar de nuevo</button>
+    </div>
+  </section>
+
+  <div id="modal" hidden>
+    <div class="caja">
+      <h2 id="mTitulo"></h2>
+      <img id="mImg" alt="" hidden>
+      <div id="mVisual" class="pizarra"></div>
+      <p id="mTexto"></p>
+      <div id="mBotones"></div>
+    </div>
+  </div>
+</main>
+<script src="juego.js"></script>
+</body>
+</html>

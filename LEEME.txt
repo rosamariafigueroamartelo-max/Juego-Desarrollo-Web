@@ -1,0 +1,3 @@
+Pon aqui el archivo Chewy-Regular.ttf
+(descargalo gratis de fonts.google.com/specimen/Chewy -> Get font -> Download all).
+El juego lo carga desde esta carpeta, sin usar internet.
